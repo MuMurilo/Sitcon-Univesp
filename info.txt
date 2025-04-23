@@ -1,0 +1,93 @@
+
+
+
+
+DADOS PARA AS ENTREGAS:
+
+⿡ NOME: Rodrigo Andrade da Silva 
+RA: 23219205
+E-MAILS:
+📧 UNIVESP: 23219205@aluno.univesp.br
+📧 _PESSOAL: rodrigondr1987@gmail.com 
+
+
+⿢ NOME: Tamirys Santos da Silva Bechelli 
+RA: 2214500
+E-MAILS:
+📧 UNIVESP: 2214500@aluno.univesp.br
+📧 PESSOAL: tamirys.bechelli@gmail.com
+
+⿣ NOME: Wagner Silva 
+RA: 24216343
+E-MAILS:
+📧 UNIVESP:
+24216343@aluno.univesp.br
+📧 PESSOAL: wmkinho@gmail.com
+
+⿤ NOME: Anderson Ferreira de Paula
+RA: 23215971
+E-MAILS:
+📧 UNIVESP: 23215971@aluno.univesp.br
+📧 PESSOAL: anderson.depaula@outlook.com
+
+⿥ NOME: Raoni Gomes Moraes 
+RA: 23204105
+E-MAILS:
+📧 UNIVESP: 23204105@aluno.univesp.br
+📧 PESSOAL: raoni.mille@gmail.com
+
+⿦ NOME: Murilo Gomes Santos 
+RA: 23206570
+E-MAILS: 23206570@aluno.univesp.br 
+📧 UNIVESP: @aluno.univesp.br
+📧 _PESSOAL:_murilo.gomes.santos@gmail.com 
+
+⿧ NOME: Genilton Manhães do Nascimento Junior 
+RA: 23217070
+E-MAILS:
+📧 _UNIVESP: 23217070@aluno.univesp.br
+📧 _PESSOAL: ggeniltonjunior@gmail.com
+
+⿨ NOME: Cesar Augusto Bechelli Pinto
+RA: 2203457
+E-MAILS:
+📧 UNIVESP: 2203457@aluno.univesp.br
+📧 PESSOAL: cesar.bechelli@gmail.com
+
+
+*CRONOGRAMA PI* 
+
+~*Q1* - 17/02/2025~   
+~*Q2* - 03/03/2025~ 
+~- Plano de ação~ 
+~11/03/2025 às 23:59~ 
+~16/03/2025 às 23:59~ 
+~*Q3* - 17/03/2025~ 
+*Q4 - 31/03/2025* 
+- *Relatório Parcial* 
+~*08/04/2025 às 23:59*~ 
+*13/04/2025 às 23:59* 
+*Q5* - 14/04/2025 
+*Q6* - 28/04/2025 
+*Q7* - 12/05/2025 
+- Relatório Final 
+- Avaliação Colaborativa 
+- Vídeo 
+20/05/2025 às 23:59 
+25/05/2025 às 23:59
+
+
+
+Integrantes
+
+Anderson Ferreira de Paula, 23215971
+Cesar Augusto Bechelli Pinto, 2203457
+Genilton Manhães do Nascimento Junior, 23217070
+Murilo Gomes Santos, 23206570
+Raoni Gomes Moraes, 23204105
+Rodrigo Andrade da Silva, 23219205
+Tamirys Santos da Silva Bechelli, 2214500
+Wagner Silva, 24216343
+
+PAULA, Anderson Ferreira de; PINTO, Cesar Augusto Bechelli; JUNIOR, Genilton Manhães do Nascimento; SANTOS, Murilo Gomes; MORAES, Raoni Gomes; SILVA, Rodrigo Andrade da; BECHELLI, Tamirys Santos da Silva; SILVA, Wagner. Sistema de informações de trajeto de condutores - SITCON. 00f. Relatório Técnico-Científico. Bacharelado em Tecnologia da Informação e Bacharelado em Engenharia de Computação – Universidade Virtual do Estado de São Paulo. Tutor: Francine Garcia Prado. Polo Mauá, 2025.
+
