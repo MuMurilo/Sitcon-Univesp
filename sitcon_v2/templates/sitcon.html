@@ -24,33 +24,68 @@
         SITCON - Sistema de Informações de Trajeto de Condutores
       </h1>
 
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card h-100">
-            <div class="card-body text-center">
-              <h5 class="card-title">Aparelhos de Mudança de Via</h5>
-              <a href="/amv" class="btn btn-primary mt-3">Acessar AMV</a>
-            </div>
-          </div>
-        </div>
+      <div class="col-md-4">
+  <div class="card h-100">
+    <div class="card-body text-center">
+      <h5 class="card-title">Aparelhos de Mudança de Via</h5>
+      <a href="/amv" class="d-inline-block mt-3 image-hover">
+        <img src="{{ url_for('static', filename='images/amv.png') }}" 
+             alt=""
+             class="img-fluid rounded"
+             style="max-width: 200px; transition: transform 0.3s;">
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .image-hover:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+</style>
 
         <div class="col-md-4">
-          <div class="card h-100">
-            <div class="card-body text-center">
-              <h5 class="card-title">Circuitos de Via</h5>
-              <a href="/cdv" class="btn btn-primary mt-3">Acessar CDV</a>
-            </div>
-          </div>
-        </div>
+  <div class="card h-100">
+    <div class="card-body text-center">
+      <h5 class="card-title">Circuitos de Via</h5>
+      <a href="/cdv" class="d-inline-block mt-3 image-hover">
+        <img src="{{ url_for('static', filename='images/cdv.png') }}" 
+             alt="Acessar CDV"
+             class="img-fluid rounded"
+             style="max-width: 200px; transition: transform 0.3s;">
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .image-hover:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+</style>
 
         <div class="col-md-4">
-          <div class="card h-100">
-            <div class="card-body text-center">
-              <h5 class="card-title">Sinais</h5>
-              <a href="/sinais" class="btn btn-primary mt-3">Acessar Sinais</a>
-            </div>
-          </div>
-        </div>
+  <div class="card h-100">
+    <div class="card-body text-center">
+      <h5 class="card-title">Sinais</h5>
+      <a href="sinais" class="d-inline-block mt-3 image-hover">
+        <img src="{{ url_for('static', filename='images/sinal.png') }}" 
+             alt="Acessar CDV"
+             class="img-fluid rounded"
+             style="max-width: 200px; transition: transform 0.3s;">
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .image-hover:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+</style>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
