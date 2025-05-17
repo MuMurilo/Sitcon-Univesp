@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy import inspect
 from models import db, AMV
 import csv
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitcon.db'
@@ -186,6 +187,10 @@ def login():
             erro = 'Credenciais inválidas!'
     
     return render_template('login.html', erro=erro)
+
+@app.route('/static/<path:filename>')
+def static_files(images):
+    return send_from_directory('static', images)
 
 @app.route('/sitcon')
 def sitcon():
