@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 
 app = Flask(__name__)
 app.secret_key = 'univesp'  # Altere para produção
@@ -28,8 +28,8 @@ def login():
     return render_template('login.html', erro=erro)
 
 @app.route('/static/<path:filename>')
-def static_files(filename):
-    return send_from_directory('static', filename)
+def static_files(images):
+    return send_from_directory('static', images)
 
 @app.route('/sitcon')
 def sitcon():
