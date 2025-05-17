@@ -300,6 +300,31 @@ def mostrar_amv(amv_id, tipo):
         flash('Acesso não autorizado', 'error')
         return redirect(url_for('login'))
     
+    TRADUCAO_CAMPOS = {
+      'idamv': 'AMV',
+      'tipofuncao': 'Tipo da Função',
+      'L1': 'Locação 1',
+        'L2': 'Locação 2',
+        'L3': 'Locação 3',
+        'L4': 'Locação 4',
+        'L5': 'Locação 5',
+        'L6': 'Locação 6',
+        'L7': 'Locação 7',
+        'L9': 'Locação 9',
+        'L10': 'Locação 10',
+        'tower': 'NX',
+        'interface': 'Bastidor de Interface',
+        'L14': 'Locação 14',
+        'L15': 'Locação 15',
+        'L16': 'Locação 16',
+        'L17': 'Locação 17',
+        'L18': 'Locação 18',
+        'L20': 'Locação 20',
+        'L21': 'Locação 21',
+        'L22': 'Locação 22',
+        'L23': 'Locação 23'
+    }
+
     try:
         amv_number = int(amv_id)
     except ValueError:
@@ -326,9 +351,11 @@ def mostrar_amv(amv_id, tipo):
         for registro in registros:
             campos = {}
             for coluna in AMV.__table__.columns:
-                valor = getattr(registro, coluna.name)
+                nome_original = coluna.name
+                nome_amigavel = nome_original if nome_original == 'tipofuncao' else TRADUCAO_CAMPOS.get(nome_original, nome_original)
+                valor = getattr(registro, nome_original)
                 if valor not in [None, '']:
-                    campos[coluna.name] = valor
+                    campos[nome_amigavel] = valor
             dados.append(campos)
             
     except Exception as e:
