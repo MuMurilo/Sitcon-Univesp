@@ -37,9 +37,9 @@
       <div class="row g-3">
         {% for sinal in sinais %}
         <div class="col-md-3 col-sm-4 col-6">
-          <button class="btn btn-outline-primary w-100 py-3">
-            {{ sinal }}
-          </button>
+          <a href="/sinais/{{ sinal }}" class="btn btn-outline-primary w-100 py-3">
+            {{ sinal }} - Luz
+          </a>
         </div>
         {% endfor %}
       </div>

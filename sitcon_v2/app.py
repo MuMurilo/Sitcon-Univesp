@@ -11,40 +11,7 @@ app.secret_key = 'univesp'  # Altere para produção
 
 db.init_app(app)
 
-# Rota para verificar a tabela
-@app.route('/check_db')
-def check_db():
-    with app.app_context():
-        try:
-            inspector = inspect(db.engine)
-            tables = inspector.get_table_names()
-            
-            if 'amv' in tables:
-                count = db.session.query(AMV).count()
-                return f"✅ Tabela AMV existe! Registros: {count}"
-            else:
-                return "❌ Tabela AMV não encontrada"
-        except Exception as e:
-            return f"⚠️ Erro: {str(e)}"
 
-@app.route('/add_example')
-def add_example():
-    with app.app_context():
-        try:
-            # Cria um registro de exemplo
-            novo_amv = AMV(
-                idamv=1,
-                tipofuncao="TEST1",
-                L1="Exemplo1",
-                L2="Exemplo2",
-                tower="TorreA"
-                # Preencha outros campos conforme necessário
-            )
-            db.session.add(novo_amv)
-            db.session.commit()
-            return "✅ Registro inserido com sucesso!"
-        except Exception as e:
-            return f"❌ Falha ao inserir: {str(e)}"
 
 # Criação das tabelas
 with app.app_context():
@@ -202,7 +169,24 @@ def importar_sinais_csv():
                     # Atualiza campos
                     existente.L1 = linha.get('L1')
                     existente.L2 = linha.get('L2')
-                    # ... (atualize todos os outros campos como no exemplo AMV) ...
+                    existente.L3 = linha.get('L3')
+                    existente.L4 = linha.get('L4')
+                    existente.L5 = linha.get('L5')
+                    existente.L6 = linha.get('L6')
+                    existente.L7 = linha.get('L7')
+                    existente.L9 = linha.get('L9')
+                    existente.L10 = linha.get('L10')
+                    existente.tower = linha.get('tower')
+                    existente.interface = linha.get('interface')
+                    existente.L14 = linha.get('L14')
+                    existente.L15 = linha.get('L15')
+                    existente.L16 = linha.get('L16')
+                    existente.L17 = linha.get('L17')
+                    existente.L18 = linha.get('L18')
+                    existente.L20 = linha.get('L20')
+                    existente.L21 = linha.get('L21')
+                    existente.L22 = linha.get('L22')
+                    existente.L23 = linha.get('L23')
                     atualizados += 1
                 else:
                     # Cria novo registro
@@ -211,7 +195,24 @@ def importar_sinais_csv():
                         tipoAspecto=linha['tipoAspecto'],
                         L1=linha.get('L1'),
                         L2=linha.get('L2'),
-                        # ... (adicione todos os outros campos) ...
+                        L3=linha.get('L3'),
+                        L4=linha.get('L4'),
+                        L5=linha.get('L5'),
+                        L6=linha.get('L6'),
+                        L7=linha.get('L7'),
+                        L9=linha.get('L9'),
+                        L10=linha.get('L10'),
+                        tower=linha.get('tower'),
+                        interface=linha.get('interface'),
+                        L14=linha.get('L14'),
+                        L15=linha.get('L15'),
+                        L16=linha.get('L16'),
+                        L17=linha.get('L17'),
+                        L18=linha.get('L18'),
+                        L20=linha.get('L20'),
+                        L21=linha.get('L21'),
+                        L22=linha.get('L22'),
+                        L23=linha.get('L23')
                     )
                     db.session.add(novo_registro)
                     criados += 1
@@ -415,8 +416,70 @@ def cdv():
 def sinais():
     if not session.get('logado'):
         return redirect(url_for('login'))
-    sinais = ['Sinal-4 LUZ', 'Sinal-6 LUZ', 'Sinal-12 LUZ', 'Sinal-16 LUZ', 'Sinal-20 LUZ', 'Sinal-22LUZ', 'Sinal-28LUZ', 'Sinal-30LUZ', 'Sinal-52LUZ', 'Sinal-54LUZ', 'Sinal-56LUZ', 'Sinal-62 LUZ', 'Sinal-64 LUZ', 'Sinal-66 LUZ', 'Sinal-68 LUZ', 'Sinal-70 LUZ', 'Sinal-72 LUZ', 'Sinal-78 LUZ', 'Sinal-80 LUZ']
+    sinais = [4, 6, 12, 16, 20, 22, 28, 30, 52, 54, 56, 62, 64, 66, 68, 70, 72, 78, 80]
     return render_template('sinais.html', sinais=sinais, titulo='Sinais')
+
+@app.route('/sinais/<sinal_id>')
+def sinal_detail(sinal_id):
+    if not session.get('logado'):
+        return redirect(url_for('login'))
+    
+    try:
+        amv_number = int(sinal_id)
+    except ValueError:
+        flash('ID do SINAL inválido', 'error')
+        return redirect(url_for('sianais'))
+    
+    TRADUCAO_CAMPOS = {
+      'idSinais': 'SINAL',
+      'tipoAspecto': 'Tipo do Aspecto',
+      'L1': 'Locação 1',
+        'L2': 'Locação 2',
+        'L3': 'Locação 3',
+        'L4': 'Locação 4',
+        'L5': 'Locação 5',
+        'L6': 'Locação 6',
+        'L7': 'Locação 7',
+        'L9': 'Locação 9',
+        'L10': 'Locação 10',
+        'tower': 'NX',
+        'interface': 'Bastidor de Interface',
+        'L14': 'Locação 14',
+        'L15': 'Locação 15',
+        'L16': 'Locação 16',
+        'L17': 'Locação 17',
+        'L18': 'Locação 18',
+        'L20': 'Locação 20',
+        'L21': 'Locação 21',
+        'L22': 'Locação 22',
+        'L23': 'Locação 23'
+    }
+    
+    registros = Sinais.query.filter_by(idSinais=sinal_id).all()
+    
+    if not registros:
+        flash(f'SINAL {sinal_id} não encontrado', 'warning')
+        return redirect(url_for('sinal'))
+    
+        # Prepara os dados para o template
+    dados = []
+    for registro in registros:
+        campos_registro = {}
+        for coluna in Sinais.__table__.columns:
+            nome_original = coluna.name
+            nome_amigavel = nome_original if nome_original == 'tipoAspecto' else TRADUCAO_CAMPOS.get(nome_original, nome_original)
+            valor = getattr(registro, nome_original)
+            if valor not in [None, '']:
+                campos_registro[nome_amigavel] = valor
+        dados.append(campos_registro)
+
+    if not dados:
+        flash(f'Sinal {sinal_id} não encontrado', 'warning')
+        return redirect(url_for('sinais'))
+    
+    return render_template('sinal_detail.html',
+                        sinal_id=sinal_id,
+                        registros=dados)
 
 @app.route('/logout')
 def logout():

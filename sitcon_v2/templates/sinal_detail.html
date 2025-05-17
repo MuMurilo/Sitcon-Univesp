@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SINAL {{ sinal_number }} - {{ tipo }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="alert {{ 'alert-primary' if tipo == 'Comando' else 'alert-success' }}">
+            <h2>Sinal {{ sinal_id }}  {{ tipo }}</h2>
+        </div>
+        
+        {% for registro in registros %}
+        <div class="card mb-4">
+            <div class="card-header bg-{{ 'primary' if tipo == 'Comando' else 'success' }} text-white">
+                Tipo Aspecto: <strong>{{ registro.tipoAspecto }}</strong>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        {% for nome, valor in registro.items() %}
+                        {% if nome != 'tipofuncao' %}
+                        <tr>
+                            <td width="30%"><strong>{{ nome }}</strong></td>
+                            <td>{{ valor }}</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <a href="/sinais/" class="btn btn-secondary">Voltar</a>
+    </div>
+</body>
+</html>
