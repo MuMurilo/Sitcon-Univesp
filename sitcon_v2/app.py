@@ -27,6 +27,10 @@ def login():
     
     return render_template('login.html', erro=erro)
 
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
+
 @app.route('/sitcon')
 def sitcon():
     if not session.get('logado'):
