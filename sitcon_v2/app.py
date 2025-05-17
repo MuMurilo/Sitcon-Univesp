@@ -1,7 +1,167 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from sqlalchemy import inspect
+from models import db, AMV
+import csv
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitcon.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'univesp'  # Altere para produção
+
+db.init_app(app)
+
+# Rota para verificar a tabela
+@app.route('/check_db')
+def check_db():
+    with app.app_context():
+        try:
+            inspector = inspect(db.engine)
+            tables = inspector.get_table_names()
+            
+            if 'amv' in tables:
+                count = db.session.query(AMV).count()
+                return f"✅ Tabela AMV existe! Registros: {count}"
+            else:
+                return "❌ Tabela AMV não encontrada"
+        except Exception as e:
+            return f"⚠️ Erro: {str(e)}"
+
+@app.route('/add_example')
+def add_example():
+    with app.app_context():
+        try:
+            # Cria um registro de exemplo
+            novo_amv = AMV(
+                idamv=1,
+                tipofuncao="TEST1",
+                L1="Exemplo1",
+                L2="Exemplo2",
+                tower="TorreA"
+                # Preencha outros campos conforme necessário
+            )
+            db.session.add(novo_amv)
+            db.session.commit()
+            return "✅ Registro inserido com sucesso!"
+        except Exception as e:
+            return f"❌ Falha ao inserir: {str(e)}"
+
+# Criação das tabelas
+with app.app_context():
+    db.create_all()
+    print("Tabelas criadas com sucesso!")
+
+@app.route('/importar_csv', methods=['GET', 'POST'])
+def importar_csv():
+    if request.method == 'POST':
+        if 'arquivo' not in request.files:
+            return "Nenhum arquivo enviado", 400
+            
+        arquivo = request.files['arquivo']
+        if not arquivo.filename.endswith('.csv'):
+            return "Formato inválido. Envie um arquivo .csv", 400
+
+        try:
+            # Processa o arquivo
+            stream = arquivo.stream.read().decode("utf-8-sig")
+            lines = stream.splitlines()
+            
+            # Configura leitor CSV para campos entre aspas
+            leitor = csv.DictReader(
+                lines,
+                delimiter=',',
+                quotechar='"',
+                skipinitialspace=True
+            )
+            
+            criados = 0
+            atualizados = 0
+            
+            for linha in leitor:
+                # Remove aspas extras dos cabeçalhos
+                linha = {k.strip('"'): v for k, v in linha.items()}
+                
+                # Busca registro existente
+                existente = AMV.query.filter_by(
+                    idamv=int(linha['idamv']),
+                    tipofuncao=linha['tipofuncao']
+                ).first()
+                
+                if existente:
+                    # Atualiza campos (exceto chaves primárias)
+                    existente.L1 = linha.get('L1')
+                    existente.L2 = linha.get('L2')
+                    existente.L3 = linha.get('L3')
+                    existente.L4 = linha.get('L4')
+                    existente.L5 = linha.get('L5')
+                    existente.L6 = linha.get('L6')
+                    existente.L7 = linha.get('L7')
+                    existente.L9 = linha.get('L9')
+                    existente.L10 = linha.get('L10')
+                    existente.tower = linha.get('tower')
+                    existente.interface = linha.get('interface')
+                    existente.L14 = linha.get('L14')
+                    existente.L15 = linha.get('L15')
+                    existente.L16 = linha.get('L16')
+                    existente.L17 = linha.get('L17')
+                    existente.L18 = linha.get('L18')
+                    existente.L20 = linha.get('L20')
+                    existente.L21 = linha.get('L21')
+                    existente.L22 = linha.get('L22')
+                    existente.L23 = linha.get('L23')
+                    atualizados += 1
+                else:
+                    # Cria novo registro
+                    novo_registro = AMV(
+                        idamv=int(linha['idamv']),
+                        tipofuncao=linha['tipofuncao'],
+                        L1=linha.get('L1'),
+                        L2=linha.get('L2'),
+                        L3=linha.get('L3'),
+                        L4=linha.get('L4'),
+                        L5=linha.get('L5'),
+                        L6=linha.get('L6'),
+                        L7=linha.get('L7'),
+                        L9=linha.get('L9'),
+                        L10=linha.get('L10'),
+                        tower=linha.get('tower'),
+                        interface=linha.get('interface'),
+                        L14=linha.get('L14'),
+                        L15=linha.get('L15'),
+                        L16=linha.get('L16'),
+                        L17=linha.get('L17'),
+                        L18=linha.get('L18'),
+                        L20=linha.get('L20'),
+                        L21=linha.get('L21'),
+                        L22=linha.get('L22'),
+                        L23=linha.get('L23')
+                    )
+                    db.session.add(novo_registro)
+                    criados += 1
+            
+            db.session.commit()
+            return f"""
+                <h3>Importação concluída!</h3>
+                <p>✅ {criados} novos registros criados</p>
+                <p>🔄 {atualizados} registros atualizados</p>
+                <a href="/importar_csv">Voltar</a>
+            """
+            
+        except KeyError as e:
+            db.session.rollback()
+            return f"Erro: Campo faltando no CSV - {str(e)}", 400
+        except Exception as e:
+            db.session.rollback()
+            return f"Erro na linha {criados+atualizados+1}: {str(e)}", 500
+    
+    # GET: Mostra formulário
+    return '''
+    <h2>Importar CSV</h2>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="arquivo" accept=".csv" required>
+      <p>Formato esperado: "idamv","tipofuncao","L1",... (com aspas)</p>
+      <button type="submit">Importar</button>
+    </form>
+    '''
 
 # Credenciais válidas
 USUARIO = 'teste'
