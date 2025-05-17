@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AMV {{ amv_id }} - SITCON</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-3">
+        <h1 class="mb-4">Dados do AMV {{ amv_id }}</h1>
+        
+        {% for registro in registros %}
+        <div class="card mb-4">
+            <div class="card-header">
+                Tipo Função: <strong>{{ registro.tipofuncao }}</strong>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        {% for nome, valor in registro.items() %}
+                        {% if nome != 'tipofuncao' %}
+                        <tr>
+                            <td width="30%"><strong>{{ nome }}</strong></td>
+                            <td>{{ valor }}</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <a href="/amv" class="btn btn-secondary">Voltar</a>
+    </div>
+</body>
+</html>

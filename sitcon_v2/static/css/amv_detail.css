@@ -1,0 +1,37 @@
+/* static/css/amv_detail.css */
+.container-amv-detail {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.amv-table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.amv-table th {
+    background-color: #0d6efd;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.amv-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.amv-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.amv-table tr:hover {
+    background-color: #e9ecef;
+}
+
+.btn-voltar {
+    margin-top: 20px;
+}

@@ -34,13 +34,15 @@
     <div class="container mt-5">
       <h1 class="text-center mb-5">{{ titulo }}</h1>
 
-      <div class="row g-3">
-        {% for amv in amvs %}
-        <div class="col-md-3 col-sm-4 col-6">
-          <button class="btn btn-outline-primary w-100 py-3">{{ amv }}</button>
-        </div>
-        {% endfor %}
-      </div>
+<div class="row g-3">
+  {% for amv in amvs %}
+  <div class="col-md-3 col-sm-4 col-6">
+    <a href="/amv/{{ amv.split(' ')[1] }}" class="btn btn-outline-primary w-100 py-3">
+      {{ amv }}  {# Mantém o texto original no botão #}
+    </a>
+  </div>
+  {% endfor %}
+</div>
 
       <div class="mt-4 text-center">
         <a href="/sitcon" class="btn btn-secondary">Voltar</a>

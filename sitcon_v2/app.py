@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy import inspect
 from models import db, AMV, Sinais
 import csv
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, flash
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitcon.db'
@@ -283,6 +283,39 @@ def amv():
         return redirect(url_for('login'))
     amvs = ['AMV 3 LUZ', 'AMV 7 LUZ', 'AMV 9 LUZ', 'AMV 11 LUZ', 'AMV 25 LUZ', 'AMV 27 LUZ', 'AMV 29 LUZ', 'AMV 31 LUZ', 'AMV 39 LUZ','AMV 43 LUZ', 'AMV 47 LUZ']
     return render_template('amv.html', amvs=amvs, titulo='Aparelhos de Mudança de Via')
+
+@app.route('/amv/<amv_id>')
+def amv_detail(amv_id):
+    if not session.get('logado'):
+        return redirect(url_for('login'))
+    
+    try:
+        amv_number = int(amv_id)
+    except ValueError:
+        flash('ID do AMV inválido', 'error')
+        return redirect(url_for('amv'))
+    
+    # Busca TODOS os registros do AMV (não apenas o primeiro)
+    registros = AMV.query.filter_by(idamv=amv_number).order_by(AMV.tipofuncao).all()
+    
+    if not registros:
+        flash(f'AMV {amv_number} não encontrado', 'warning')
+        return redirect(url_for('amv'))
+    
+    # Prepara os dados para o template
+    dados = []
+    for registro in registros:
+        campos_registro = {}
+        for coluna in AMV.__table__.columns:
+            nome = coluna.name
+            valor = getattr(registro, nome)
+            if valor not in [None, '']:
+                campos_registro[nome] = valor
+        dados.append(campos_registro)
+    
+    return render_template('amv_detail.html',
+                        amv_id=amv_number,
+                        registros=dados)
 
 @app.route('/cdv')
 def cdv():
