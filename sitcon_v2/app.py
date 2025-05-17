@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy import inspect
-from models import db, AMV
+from models import db, AMV, Sinais
 import csv
 from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 
@@ -163,6 +163,85 @@ def importar_csv():
       <button type="submit">Importar</button>
     </form>
     '''
+
+# Rotas para a tabela Sinais
+@app.route('/importar_sinais_csv', methods=['GET', 'POST'])
+def importar_sinais_csv():
+    if request.method == 'POST':
+        if 'arquivo' not in request.files:
+            return "Nenhum arquivo enviado", 400
+            
+        arquivo = request.files['arquivo']
+        if not arquivo.filename.endswith('.csv'):
+            return "Formato inválido. Envie um arquivo .csv", 400
+
+        try:
+            stream = arquivo.stream.read().decode("utf-8-sig")
+            lines = stream.splitlines()
+            
+            leitor = csv.DictReader(
+                lines,
+                delimiter=',',
+                quotechar='"',
+                skipinitialspace=True
+            )
+            
+            criados = 0
+            atualizados = 0
+            
+            for linha in leitor:
+                linha = {k.strip('"'): v for k, v in linha.items()}
+                
+                # Verifica registro existente
+                existente = Sinais.query.filter_by(
+                    idSinais=int(linha['idSinais']),
+                    tipoAspecto=linha['tipoAspecto']
+                ).first()
+                
+                if existente:
+                    # Atualiza campos
+                    existente.L1 = linha.get('L1')
+                    existente.L2 = linha.get('L2')
+                    # ... (atualize todos os outros campos como no exemplo AMV) ...
+                    atualizados += 1
+                else:
+                    # Cria novo registro
+                    novo_registro = Sinais(
+                        idSinais=int(linha['idSinais']),
+                        tipoAspecto=linha['tipoAspecto'],
+                        L1=linha.get('L1'),
+                        L2=linha.get('L2'),
+                        # ... (adicione todos os outros campos) ...
+                    )
+                    db.session.add(novo_registro)
+                    criados += 1
+            
+            db.session.commit()
+            return f"""
+                <h3>Importação de Sinais concluída!</h3>
+                <p>✅ {criados} novos registros criados</p>
+                <p>🔄 {atualizados} registros atualizados</p>
+                <a href="/importar_sinais_csv">Voltar</a>
+            """
+            
+        except Exception as e:
+            db.session.rollback()
+            return f"Erro: {str(e)}", 500
+    
+    return '''
+    <h2>Importar CSV - Sinais</h2>
+    <form method="post" enctype="multipart/form-data">
+      <input type="file" name="arquivo" accept=".csv" required>
+      <p>Formato esperado: "idSinais","tipoAspecto","L1",... (com aspas)</p>
+      <button type="submit">Importar</button>
+    </form>
+    '''
+
+@app.route('/verificar_sinais')
+def verificar_sinais():
+    registros = Sinais.query.order_by(Sinais.idSinais, Sinais.tipoAspecto).limit(50).all()
+    return render_template('verificar_sinais.html', registros=registros)
+
 
 # Credenciais válidas
 USUARIO = 'teste'
