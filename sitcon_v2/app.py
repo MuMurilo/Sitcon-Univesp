@@ -281,8 +281,68 @@ def sitcon():
 def amv():
     if not session.get('logado'):
         return redirect(url_for('login'))
-    amvs = ['AMV 3 LUZ', 'AMV 7 LUZ', 'AMV 9 LUZ', 'AMV 11 LUZ', 'AMV 25 LUZ', 'AMV 27 LUZ', 'AMV 29 LUZ', 'AMV 31 LUZ', 'AMV 39 LUZ','AMV 43 LUZ', 'AMV 47 LUZ']
-    return render_template('amv.html', amvs=amvs, titulo='Aparelhos de Mudança de Via')
+    amv_numbers = [3, 7, 9, 11, 25, 27, 29, 31, 39, 43, 47]
+    return render_template('amv.html', 
+                        amvs=amv_numbers,
+                        titulo='Aparelhos de Mudança de Via')
+
+@app.route('/amv_comando/<amv_id>')
+def amv_comando(amv_id):
+    return mostrar_amv(amv_id, tipo='Comando')
+
+@app.route('/amv_indicacao/<amv_id>')
+def amv_indicacao(amv_id):
+    return mostrar_amv(amv_id, tipo='Indicação')
+
+
+def mostrar_amv(amv_id, tipo):
+    if not session.get('logado'):
+        flash('Acesso não autorizado', 'error')
+        return redirect(url_for('login'))
+    
+    try:
+        amv_number = int(amv_id)
+    except ValueError:
+        flash('ID do AMV deve ser um número', 'error')
+        return redirect(url_for('amv'))
+    
+    # Definindo dados como lista vazia por padrão
+    dados = []
+    
+    try:
+        # Filtra por tipo (ajuste conforme sua lógica de negócios)
+        if tipo == 'Comando':
+            registros = AMV.query.filter_by(idamv=amv_number)\
+                               .filter(AMV.tipofuncao.in_(['NWR', 'WR']))\
+                               .order_by(AMV.tipofuncao)\
+                               .all()
+        else:  # Indicação
+            registros = AMV.query.filter_by(idamv=amv_number)\
+                               .filter(AMV.tipofuncao.in_(['NWP', 'WP']))\
+                               .order_by(AMV.tipofuncao)\
+                               .all()
+        
+        # Processa os registros encontrados
+        for registro in registros:
+            campos = {}
+            for coluna in AMV.__table__.columns:
+                valor = getattr(registro, coluna.name)
+                if valor not in [None, '']:
+                    campos[coluna.name] = valor
+            dados.append(campos)
+            
+    except Exception as e:
+        flash(f'Erro ao acessar banco de dados: {str(e)}', 'error')
+        return redirect(url_for('amv'))
+    
+    if not dados:
+        flash(f'Nenhum registro de {tipo} encontrado para AMV {amv_number}', 'warning')
+        return redirect(url_for('amv'))
+    
+    return render_template('amv_detail.html',
+                         amv_id=amv_number,
+                         registros=dados,
+                         tipo=tipo)
 
 @app.route('/amv/<amv_id>')
 def amv_detail(amv_id):

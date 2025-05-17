@@ -8,6 +8,20 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+        <style>
+        .grupo-botoes {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        .grupo-titulo {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0d6efd;
+        }
+    </style>
   </head>
   <body>
     <nav class="navbar bg-primary navbar-dark">
@@ -34,15 +48,32 @@
     <div class="container mt-5">
       <h1 class="text-center mb-5">{{ titulo }}</h1>
 
-<div class="row g-3">
-  {% for amv in amvs %}
-  <div class="col-md-3 col-sm-4 col-6">
-    <a href="/amv/{{ amv.split(' ')[1] }}" class="btn btn-outline-primary w-100 py-3">
-      {{ amv }}  {# Mantém o texto original no botão #}
-    </a>
-  </div>
-  {% endfor %}
-</div>
+        <div class="grupo-botoes">
+            <h2 class="grupo-titulo text-primary">Comando</h2>
+            <div class="row g-3">
+                {% for amv in amvs %}
+                <div class="col-md-3 col-sm-4 col-6">
+                    <a href="/amv_comando/{{ amv }}" class="btn btn-outline-primary w-100 py-3">
+                        AMV {{ amv }} LUZ
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Grupo INDICAÇÃO -->
+        <div class="grupo-botoes">
+            <h2 class="grupo-titulo text-success">Indicação</h2>
+            <div class="row g-3">
+                {% for amv in amvs %}
+                <div class="col-md-3 col-sm-4 col-6">
+                    <a href="/amv_indicacao/{{ amv }}" class="btn btn-outline-success w-100 py-3">
+                        AMV {{ amv }} LUZ
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
 
       <div class="mt-4 text-center">
         <a href="/sitcon" class="btn btn-secondary">Voltar</a>
