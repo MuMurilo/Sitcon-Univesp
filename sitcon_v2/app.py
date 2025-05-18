@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from sqlalchemy import inspect
-from models import db, AMV, Sinais
+from models import db, AMV, Sinais, Usuario, MatriculasValidas
 import csv
+from werkzeug.security import generate_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, flash
 
 app = Flask(__name__)
@@ -277,6 +278,45 @@ def sitcon():
     if not session.get('logado'):
         return redirect(url_for('login'))
     return render_template('sitcon.html')
+
+@app.route('/cadastro', methods=['GET', 'POST'])
+def cadastro():
+    if request.method == 'POST':
+        matricula = request.form.get('matricula')
+        login = request.form.get('login')
+        nome = request.form.get('nome')
+        senha = request.form.get('senha')
+        
+        # Verifica se a matrícula NÃO existe na tabela de matrículas válidas
+        if not MatriculasValidas.query.filter_by(matricula=matricula).first():
+            flash('Matrícula não encontrada no sistema. Cadastro não permitido.', 'error')
+            return redirect(url_for('cadastro'))
+        
+        # Verifica se a matrícula JÁ está cadastrada como usuário
+        if Usuario.query.filter_by(matricula=matricula).first():
+            flash('Esta matrícula já possui cadastro ativo.', 'error')
+            return redirect(url_for('cadastro'))
+        
+        # Verifica se o login já existe
+        if Usuario.query.filter_by(login=login).first():
+            flash('Nome de usuário já em uso. Escolha outro.', 'error')
+            return redirect(url_for('cadastro'))
+        
+        # Cria o usuário se passou nas validações
+        novo_usuario = Usuario(
+            matricula=matricula,
+            login=login,
+            nome=nome,
+            senha=generate_password_hash(senha)
+        )
+        
+        db.session.add(novo_usuario)
+        db.session.commit()
+        
+        flash('Cadastro realizado com sucesso!', 'success')
+        return redirect(url_for('login'))
+    
+    return render_template('cadastro.html', titulo="Cadastro de Usuário")
 
 @app.route('/amv')
 def amv():

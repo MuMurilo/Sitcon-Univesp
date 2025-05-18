@@ -65,3 +65,18 @@ class Sinais(db.Model):
 
     def __repr__(self):
         return f"<Sinais idSinais={self.idSinais}, tipoAspecto={self.tipoAspecto}>"
+    
+class MatriculasValidas(db.Model):
+    """Tabela com as matrículas que podem se cadastrar"""
+    __tablename__ = 'matriculas_validas'
+    matricula = db.Column(db.String(20), primary_key=True)  # Chave primária
+    # Outros campos se necessário (ex: nome, departamento)
+
+class Usuario(db.Model):
+    """Tabela de usuários cadastrados"""
+    __tablename__ = 'usuarios'
+    id = db.Column(db.Integer, primary_key=True)
+    matricula = db.Column(db.String(20), unique=True, nullable=False)
+    login = db.Column(db.String(50), unique=True, nullable=False)
+    nome = db.Column(db.String(100), nullable=False)
+    senha = db.Column(db.String(128), nullable=False)
