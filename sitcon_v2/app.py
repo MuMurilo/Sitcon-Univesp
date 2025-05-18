@@ -3,6 +3,7 @@ from sqlalchemy import inspect
 from models import db, AMV, Sinais, Usuario, MatriculasValidas
 import csv
 from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, flash
 
 app = Flask(__name__)
@@ -258,14 +259,17 @@ def login():
     erro = None
     
     if request.method == 'POST':
-        usuario = request.form['usuario']
+        login = request.form['usuario']
         senha = request.form['senha']
+
+        usuario = Usuario.query.filter_by(login=login).first()
         
-        if usuario == USUARIO and senha == SENHA:
+        if usuario and check_password_hash(usuario.senha, senha):
             session['logado'] = True
+            session['usuario_id'] = usuario.id  # Armazena o ID do usuário na sessão
             return redirect(url_for('sitcon'))
         else:
-            erro = 'Credenciais inválidas!'
+            erro = 'Credenciais inválidas ou usuário não cadastrado!'
     
     return render_template('login.html', erro=erro)
 
@@ -524,6 +528,7 @@ def sinal_detail(sinal_id):
 @app.route('/logout')
 def logout():
     session.pop('logado', None)
+    session.pop('usuario_id', None)
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
