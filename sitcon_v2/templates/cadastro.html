@@ -8,39 +8,42 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
     <style>
-        .card-header {
-            font-size: 1.2rem;
-        }
-        .card {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            height: 100%;
-        }
-        .table-responsive {
-            max-height: 300px;
-            overflow-y: auto;
-        }
+      .card-header {
+        font-size: 1.2rem;
+      }
+      .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        height: 100%;
+      }
+      .table-responsive {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+      .registro-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      @media (max-width: 768px) {
         .registro-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+          grid-template-columns: 1fr;
         }
-        @media (max-width: 768px) {
-            .registro-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
+      }
+      .form-container {
+        max-width: 500px;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
     <nav class="navbar bg-primary navbar-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/sitcon">
+        <a class="navbar-brand" href="/sitcon" style="font-size: 28px">
           <img
             src="{{ url_for('static', filename='images/train3.png') }}"
             alt="Logo SITCON"
@@ -63,16 +66,18 @@
       <h1 class="text-center mb-5">Cadastro de Usuário</h1>
 
       <div class="form-container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }} alert-dismissible fade show">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show">
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
 
         <div class="card">
           <div class="card-header bg-primary text-white">
@@ -82,25 +87,51 @@
             <form method="POST" action="{{ url_for('cadastro') }}">
               <div class="mb-3">
                 <label for="matricula" class="form-label">Matrícula</label>
-                <input type="text" class="form-control" id="matricula" name="matricula" required>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="matricula"
+                  name="matricula"
+                  required
+                />
               </div>
-              
+
               <div class="mb-3">
                 <label for="login" class="form-label">Nome de Usuário</label>
-                <input type="text" class="form-control" id="login" name="login" required>
-                <small class="text-muted">Escolha um nome único para login</small>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="login"
+                  name="login"
+                  required
+                />
+                <small class="text-muted"
+                  >Escolha um nome único para login</small
+                >
               </div>
-              
+
               <div class="mb-3">
                 <label for="nome" class="form-label">Nome Completo</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nome"
+                  name="nome"
+                  required
+                />
               </div>
-              
+
               <div class="mb-3">
                 <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" required>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="senha"
+                  name="senha"
+                  required
+                />
               </div>
-              
+
               <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">
                   <i class="bi bi-person-plus me-1"></i> Cadastrar
@@ -112,7 +143,8 @@
 
         <div class="mt-4 text-center">
           <a href="{{ url_for('login') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-box-arrow-in-left me-1"></i> Já tem conta? Faça login
+            <i class="bi bi-box-arrow-in-left me-1"></i> Já tem conta? Faça
+            login
           </a>
         </div>
       </div>

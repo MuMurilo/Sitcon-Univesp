@@ -8,7 +8,10 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
     <style>
       .image-hover:hover img {
         transform: scale(1.05);
@@ -22,7 +25,7 @@
   <body>
     <nav class="navbar bg-primary navbar-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/sitcon">
+        <a class="navbar-brand" href="/sitcon" style="font-size: 28px">
           <img
             src="{{ url_for('static', filename='images/train3.png') }}"
             alt="Logo SITCON"
@@ -41,14 +44,10 @@
     </nav>
 
     <div class="container mt-5">
-      <h1 class="text-center mb-5">
-        SITCON - Sistema de Informações de Trajeto de Condutores
-      </h1>
+      <h1 class="text-center mb-5">Equipamentos</h1>
 
-      <!-- Linha com os 3 cards alinhados horizontalmente -->
+
       <div class="row justify-content-center">
-        <!-- justify-content-center centraliza os cards -->
-        <!-- Card 1 - AMV -->
         <div class="col-md-4">
           <div class="card h-100">
             <div class="card-body text-center">
@@ -98,7 +97,12 @@
         </div>
       </div>
     </div>
-
+    <footer class="mt-5 py-3 bg-light">
+      <div class="container text-center">
+        <p class="mb-0">SITCON - Sistema de Informações de Trajeto de Condutores</p>
+        <p class="mb-0 text-muted">Versão 1.0 | &copy; 2025</p>
+      </div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

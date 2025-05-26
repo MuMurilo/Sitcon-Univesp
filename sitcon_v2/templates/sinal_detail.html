@@ -1,178 +1,196 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SITCON - Sinal {{ sinal_id }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
     <style>
-        .card-header {
-            font-size: 1.2rem;
-        }
-        .card {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            height: 100%;
-        }
-        .table-responsive {
-            max-height: 300px;
-            overflow-y: auto;
-        }
+      .card-header {
+        font-size: 1.2rem;
+      }
+      .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        height: 100%;
+      }
+      .table-responsive {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+      .registro-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      @media (max-width: 768px) {
         .registro-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+          grid-template-columns: 1fr;
         }
-        @media (max-width: 768px) {
-            .registro-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar bg-primary navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/sitcon">
-                <img src="{{ url_for('static', filename='images/train3.png') }}" 
-                     alt="Logo SITCON"
-                     width="40"
-                     height="40"
-                     class="d-inline-block align-text-top me-2" />
-                SITCON
-            </a>
-            <div class="d-flex">
-                <a href="{{ url_for('logout') }}" class="btn btn-outline-light">
-                    <i class="bi bi-box-arrow-right me-1"></i> Sair
-                </a>
-            </div>
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/sitcon" style="font-size: 28px">
+          <img
+            src="{{ url_for('static', filename='images/train3.png') }}"
+            alt="Logo SITCON"
+            width="40"
+            height="40"
+            class="d-inline-block align-text-top me-2"
+          />
+          SITCON
+        </a>
+
+        <div class="d-flex">
+          <a href="{{ url_for('logout') }}" class="btn btn-outline-light">
+            <i class="bi bi-box-arrow-right me-1"></i> Sair
+          </a>
         </div>
+      </div>
     </nav>
 
     <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="text-primary">Sinal {{ sinal_id }}</h1>
-            <a href="/sinais" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Voltar
-            </a>
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">Sinal {{ sinal_id }}</h1>
+        <a href="/sinais" class="btn btn-secondary">
+          <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+      </div>
+
+
+      <div class="registro-grid">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <i class="bi bi-table"></i> Aspecto RGE
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <tbody>
+                  {% if registros|length > 0 %} {% for nome, valor in
+                  registros[0].items() %}
+                  <tr>
+                    <td width="40%"><strong>{{ nome }}</strong></td>
+                    <td>{{ valor }}</td>
+                  </tr>
+                  {% endfor %} {% else %}
+                  <tr>
+                    <td colspan="2" class="text-center">
+                      Nenhum dado disponível
+                    </td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-        <!-- Grade 2x2 de registros -->
-        <div class="registro-grid">
-            <!-- Linha 1 -->
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <i class="bi bi-table"></i> Aspecto RGE
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                {% if registros|length > 0 %}
-                                    {% for nome, valor in registros[0].items() %}
-                                    <tr>
-                                        <td width="40%"><strong>{{ nome }}</strong></td>
-                                        <td>{{ valor }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr>
-                                        <td colspan="2" class="text-center">Nenhum dado disponível</td>
-                                    </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <i class="bi bi-table"></i> Aspecto RGENX
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <tbody>
+                  {% if registros|length > 1 %} {% for nome, valor in
+                  registros[1].items() %}
+                  <tr>
+                    <td width="40%"><strong>{{ nome }}</strong></td>
+                    <td>{{ valor }}</td>
+                  </tr>
+                  {% endfor %} {% else %}
+                  <tr>
+                    <td colspan="2" class="text-center">
+                      Nenhum dado disponível
+                    </td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
             </div>
-
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <i class="bi bi-table"></i> Aspecto RGENX
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                {% if registros|length > 1 %}
-                                    {% for nome, valor in registros[1].items() %}
-                                    <tr>
-                                        <td width="40%"><strong>{{ nome }}</strong></td>
-                                        <td>{{ valor }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr>
-                                        <td colspan="2" class="text-center">Nenhum dado disponível</td>
-                                    </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Linha 2 -->
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <i class="bi bi-table"></i> Aspecto YGE
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                {% if registros|length > 2 %}
-                                    {% for nome, valor in registros[2].items() %}
-                                    <tr>
-                                        <td width="40%"><strong>{{ nome }}</strong></td>
-                                        <td>{{ valor }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr>
-                                        <td colspan="2" class="text-center">Nenhum dado disponível</td>
-                                    </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <i class="bi bi-table"></i> Aspecto YGENX
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                {% if registros|length > 3 %}
-                                    {% for nome, valor in registros[3].items() %}
-                                    <tr>
-                                        <td width="40%"><strong>{{ nome }}</strong></td>
-                                        <td>{{ valor }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr>
-                                        <td colspan="2" class="text-center">Nenhum dado disponível</td>
-                                    </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
 
-        <div class="text-center mt-4">
-            <a href="/sinais" class="btn btn-primary">
-                <i class="bi bi-list"></i> Ver Todos os Sinais
-            </a>
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <i class="bi bi-table"></i> Aspecto YGE
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <tbody>
+                  {% if registros|length > 2 %} {% for nome, valor in
+                  registros[2].items() %}
+                  <tr>
+                    <td width="40%"><strong>{{ nome }}</strong></td>
+                    <td>{{ valor }}</td>
+                  </tr>
+                  {% endfor %} {% else %}
+                  <tr>
+                    <td colspan="2" class="text-center">
+                      Nenhum dado disponível
+                    </td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <i class="bi bi-table"></i> Aspecto YGENX
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <tbody>
+                  {% if registros|length > 3 %} {% for nome, valor in
+                  registros[3].items() %}
+                  <tr>
+                    <td width="40%"><strong>{{ nome }}</strong></td>
+                    <td>{{ valor }}</td>
+                  </tr>
+                  {% endfor %} {% else %}
+                  <tr>
+                    <td colspan="2" class="text-center">
+                      Nenhum dado disponível
+                    </td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="/sinais" class="btn btn-primary">
+          <i class="bi bi-list"></i> Ver Todos os Sinais
+        </a>
+      </div>
     </div>
 
+    <footer class="mt-5 py-3 bg-light">
+      <div class="container text-center">
+        <p class="mb-0">SITCON - Sistema de Informações de Trajeto de Condutores</p>
+        <p class="mb-0 text-muted">Versão 1.0 | &copy; 2025</p>
+      </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>
