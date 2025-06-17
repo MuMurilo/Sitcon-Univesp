@@ -10,25 +10,24 @@
 {% for registro in registros %}
 <div class="card mb-4">
     <div class="card-header bg-{{ 'primary' if tipo == 'Comando' else 'success' }} text-white">
-        Tipo Função: <strong>{{ registro.tipofuncao }}</strong>
+        Tipo Função: <strong>{{ registro['Tipo da Função'] }}</strong>
     </div>
     <div class="card-body">
         <table class="table">
             <tbody>
-                {% for nome, valor in registro.items() %} 
-                {% if nome != 'tipofuncao' %}
-                <tr>
-                    <td width="30%"><strong>{{ nome }}</strong></td>
-                    <td>{{ valor }}</td>
-                </tr>
-                {% endif %} 
+                {% for nome, valor in registro.items() %}
+                    {% if nome != 'Tipo da Função' %}
+                    <tr>
+                        <td width="30%"><strong>{{ nome }}</strong></td>
+                        <td>{{ valor }}</td>
+                    </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
 {% endfor %}
-<div class="mt-4 text-center">
+
 <a href="{{ url_for('amv') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
-</div>
 {% endblock %}
