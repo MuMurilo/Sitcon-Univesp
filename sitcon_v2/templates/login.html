@@ -3,8 +3,11 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
-  <div class="card shadow" style="width: 400px;">
+<div
+  class="d-flex justify-content-center align-items-center"
+  style="min-height: 60vh"
+>
+  <div class="card shadow" style="width: 400px">
     <div class="card-body p-4">
       <h2 class="card-title text-center mb-4">Login</h2>
 
@@ -12,21 +15,36 @@
       <div class="alert alert-danger">{{ erro }}</div>
       {% endif %}
 
-      <form method="POST" action="{{ url_for('login') }}">
+      <form method="POST" action="/login">
         <div class="mb-3">
           <label for="usuario" class="form-label">Usuário</label>
-          <input type="text" class="form-control" id="usuario" name="usuario" required />
+          <input
+            type="text"
+            class="form-control"
+            id="usuario"
+            name="usuario"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="senha" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="senha" name="senha" required />
+          <input
+            type="password"
+            class="form-control"
+            id="senha"
+            name="senha"
+            required
+          />
         </div>
         <button type="submit" class="btn btn-primary w-100 mb-2">Entrar</button>
         <div class="text-center">
-            <a href="{{ url_for('cadastro') }}" class="btn btn-outline-secondary w-100">
-                Criar nova conta
-            </a>
-            <div class="mt-2 text-muted small">Login didático - Usuário: teste / Senha: teste</div>
+          <a
+            href="{{ url_for('cadastro') }}"
+            class="btn btn-outline-secondary w-100"
+          >
+            Criar nova conta
+          </a>
+          <div class="mt-2 text-muted small">Login didático - Usuário: teste / Senha: teste</div>
         </div>
       </form>
     </div>

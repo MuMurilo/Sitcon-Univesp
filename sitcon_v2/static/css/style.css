@@ -1,0 +1,115 @@
+/* Estilos Gerais e de Componentes (extraídos de vários templates) */
+.card-header {
+  font-size: 1.2rem;
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  margin-bottom: 20px; /* Espaço entre as linhas em dispositivos móveis */
+}
+
+.table-responsive {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.registro-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .registro-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Estilo para hover de imagem (da sitcon.html) */
+.image-hover:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para formulários (de login.html e cadastro.html) */
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Estilos da página AMV (amv.html) */
+.grupo-botoes {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.grupo-titulo {
+  text-align: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #0d6efd;
+}
+
+/* Estilo dos botões de CDV (cdv.html) */
+.cdv-btn {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Estilos da página de detalhes de CDV (cdv_detail.html) */
+.single-card-row {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+}
+
+.single-card {
+  width: 50%;
+}
+
+@media (max-width: 576px) {
+  .single-card {
+    width: 100%;
+  }
+}
+
+/* Estilos da página de detalhes de AMV (amv_detail.css) */
+.container-amv-detail {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.amv-table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.amv-table th {
+  background-color: #0d6efd;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.amv-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.amv-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.amv-table tr:hover {
+  background-color: #e9ecef;
+}
+
+.btn-voltar {
+  margin-top: 20px;
+}

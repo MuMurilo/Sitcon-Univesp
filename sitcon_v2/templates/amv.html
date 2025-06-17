@@ -2,23 +2,6 @@
 
 {% block title %}Aparelhos de Mudança de Via{% endblock %}
 
-{% block head_extra %}
-<style>
-  .grupo-botoes {
-    margin-bottom: 30px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-  }
-  .grupo-titulo {
-    text-align: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #0d6efd;
-  }
-</style>
-{% endblock %}
-
 {% block content %}
 <h1 class="text-center mb-5">{{ titulo }}</h1>
 
@@ -27,7 +10,10 @@
   <div class="row g-3">
     {% for amv in amvs %}
     <div class="col-md-3 col-sm-4 col-6">
-      <a href="/amv_comando/{{ amv }}" class="btn btn-outline-primary w-100 py-3">
+      <a
+        href="/amv_comando/{{ amv }}"
+        class="btn btn-outline-primary w-100 py-3"
+      >
         AMV {{ amv }} LUZ
       </a>
     </div>
@@ -40,7 +26,10 @@
   <div class="row g-3">
     {% for amv in amvs %}
     <div class="col-md-3 col-sm-4 col-6">
-      <a href="/amv_indicacao/{{ amv }}" class="btn btn-outline-success w-100 py-3">
+      <a
+        href="/amv_indicacao/{{ amv }}"
+        class="btn btn-outline-success w-100 py-3"
+      >
         AMV {{ amv }} LUZ
       </a>
     </div>
@@ -49,6 +38,6 @@
 </div>
 
 <div class="mt-4 text-center">
-  <a href="{{ url_for('sitcon') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
+  <a href="/sitcon" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
 </div>
 {% endblock %}
