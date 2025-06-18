@@ -44,6 +44,30 @@ TRADUCOES_GERAIS = {
     'L23': 'Locação 23'
 }
 
+def formatar_valor_locacao(valor):
+    """Transforma um valor como 'B-B-29' em 'Caixa B, TB B-29'."""
+    if not isinstance(valor, str) or '-' not in valor:
+        # Se não for um texto ou não tiver o formato esperado, retorna o valor original
+        return valor
+    
+    partes = valor.split('-')
+    
+    if len(partes) >= 3:
+        # Formato esperado: "B-B-29" ou mais partes
+        caixa = f"Caixa {partes[0]}"
+        tb = f"TB {partes[1]}-{partes[2]}"
+        return f"{caixa}, {tb}"
+    elif len(partes) == 2:
+        # Formato como "B-B"
+        caixa = f"Caixa {partes[0]}"
+        tb = f"TB {partes[1]}"
+        return f"{caixa}, {tb}"
+    else:
+        # Outros casos, retorna o valor original
+        return valor
+
+# sitcon_v2/app.py
+
 def formatar_registros(registros, model_class):
     """
     Recebe uma lista de registros do SQLAlchemy e formata para exibição.
@@ -58,7 +82,15 @@ def formatar_registros(registros, model_class):
         for coluna in model_class.__table__.columns:
             nome_original = coluna.name
             nome_amigavel = TRADUCOES_GERAIS.get(nome_original, nome_original)
+            
             valor = getattr(registro, nome_original)
+
+            # --- LINHAS A SEREM ADICIONADAS ---
+            # Se a coluna for de locação (L1, L2, etc.), formata o valor
+            if nome_original.startswith('L') and nome_original[1:].isdigit():
+                valor = formatar_valor_locacao(valor)
+            # --- FIM DAS LINHAS A SEREM ADICIONADAS ---
+
             if valor not in [None, '']:
                 campos_registro[nome_amigavel] = valor
         dados_formatados.append(campos_registro)
